@@ -3,12 +3,13 @@ class Stipendio
 {
     private $mensile;
     private $tredicesima;
-    private $quattordicesima;
-    public function __construct($mensile, $tredicesima, $quattordicesima)
+    private bool $quattordicesima;
+    public function __construct($mensile, bool $tredicesima, bool $quattordicesima)
     {
         $this->setMensile($mensile);
         $this->setTredicesima($tredicesima);
         $this->setQuattordicesima($quattordicesima);
+        $this->stipendioAnnuale();
     }
     public function setMensile($mensile)
     {
@@ -20,6 +21,7 @@ class Stipendio
         return $this->mensile;
 
     }
+
     public function setTredicesima($tredicesima)
     {
         $this->tredicesima = $tredicesima;
@@ -28,6 +30,7 @@ class Stipendio
     public function getTredicesima()
     {
         return $this->tredicesima;
+
 
     }
     public function setQuattordicesima($quattordicesima)
@@ -42,11 +45,24 @@ class Stipendio
     }
     public function stipendioAnnuale()
     {
-        return ($this->getMensile() * 12) + $this->getTredicesima() + $this->getQuattordicesima();
+        if ($this->getTredicesima() === false && $this->getQuattordicesima() === false) {
+            return $this->getMensile() * 12;
+        } else if ($this->getTredicesima() === true && $this->getQuattordicesima() === true) {
+            return ($this->getMensile() * 12) + $this->getMensile() * 2;
+
+        } else if ($this->getTredicesima() === false && $this->getQuattordicesima() === true) {
+            return ($this->getMensile() * 12) + $this->getMensile();
+
+        } else if ($this->getTredicesima() === true && $this->getQuattordicesima() === false) {
+            return ($this->getMensile() * 12) + $this->getMensile();
+
+        }
+
+
     }
     public function getHtml()
     {
-        return "</h1>" . "Mensile : " . $this->getMensile() . "<br>" . "Tredicesima :" . $this->getTredicesima() . "<br>" . "Quattordicesima :" . $this->getQuattordicesima() . "<br>" . "Stipendio annuale :" . $this->stipendioAnnuale();
+        return "</h1>" . "Mensile : " . $this->getMensile() . "<br>" . "Stipendio annuale :" . $this->stipendioAnnuale();
     }
 }
 class Persona
@@ -109,7 +125,7 @@ class Persona
     }
     public function getHtml()
     {
-        return "Nome : " . $this->getNome() . "<br>" . "Cognome : " . $this->getCognome() . "<br>" . "Codice Fiscale : " . $this->getCodFiscale() . "<br>";
+        return "Nome : " . $this->getNome() . "<br>" . "Cognome : " . $this->getCognome() . "<br>" . "Data di nascita : " . $this->getDataNascita() . "<br>" . "Luogo di nascita : " . $this->getLuogoNascita() . "<br>" . "Codice Fiscale : " . $this->getCodFiscale() . "<br>";
     }
 
 }
@@ -183,7 +199,7 @@ class Capo extends Persona
 
 
 }
-$stipendio1 = new Stipendio(1200, 800, 700);
+$stipendio1 = new Stipendio(1200, true, false);
 $impiegato1 = new Impiegato("Luca", "Rossi", "1990-10-10", "Milano", "AD21DSM28F", $stipendio1, "2022-01-01");
 $capo1 = new Capo("Mario", "Verdi", "1967-20-12", "Firenze", "MDJ2KDOED2", 1700, 400);
 
