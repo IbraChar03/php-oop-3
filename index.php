@@ -49,5 +49,5 @@ class Stipendio
         return "</h1>" . "Mensile : " . $this->getMensile() . "<br>" . "Tredicesima :" . $this->getTredicesima() . "<br>" . "Quattordicesima :" . $this->getQuattordicesima() . "<br>" . "Stipendio annuale :" . $this->stipendioAnnuale();
     }
 }
-$stipendio = new Stipendio(1200, 800, 700);
-echo $stipendio->getHtml();
+$stipendio1 = new Stipendio(1200, 800, 700);
+echo $stipendio1->getHtml();
