@@ -49,5 +49,77 @@ class Stipendio
         return "</h1>" . "Mensile : " . $this->getMensile() . "<br>" . "Tredicesima :" . $this->getTredicesima() . "<br>" . "Quattordicesima :" . $this->getQuattordicesima() . "<br>" . "Stipendio annuale :" . $this->stipendioAnnuale();
     }
 }
+class Persona
+{
+    private $nome;
+    private $cognome;
+    private $dataNascita;
+    private $luogoNascita;
+    private $codFiscale;
+    private Stipendio $stipendio;
+    private $dataAssunzione;
+
+    public function __construct($nome, $cognome, $dataNascita, $codFiscale, Stipendio $stipendio, $dataAssunzione)
+    {
+        $this->setNome($nome);
+        $this->setCognome($cognome);
+        $this->setDataNascita($dataNascita);
+        $this->setCodFiscale($codFiscale);
+        $this->setStipendio($stipendio);
+        $this->setDataAssunzione($dataAssunzione);
+
+    }
+    public function setNome($nome)
+    {
+        $this->nome = $nome;
+    }
+    public function getNome()
+    {
+        $this->nome;
+    }
+    public function setCognome($cognome)
+    {
+        $this->cognome = $cognome;
+    }
+    public function getCognome()
+    {
+        $this->cognome;
+    }
+    public function setDataNascita($dataNascita)
+    {
+        $this->dataNascita = $dataNascita;
+    }
+    public function getDataNascita()
+    {
+        $this->dataNascita;
+    }
+    public function setCodFiscale($codFiscale)
+    {
+        $this->codFiscale = $codFiscale;
+    }
+    public function getCodFiscale()
+    {
+        $this->codFiscale;
+    }
+    public function setStipendio($stipendio)
+    {
+        $this->stipendio = $stipendio;
+    }
+    public function getStipendio()
+    {
+        $this->stipendio->stipendioAnnuale();
+    }
+    public function setDataAssunzione($dataAssunzione)
+    {
+        $this->dataAssunzione = $dataAssunzione;
+    }
+    public function getDataAssunzione()
+    {
+        $this->dataAssunzione;
+    }
+
+
+}
+
 $stipendio1 = new Stipendio(1200, 800, 700);
 echo $stipendio1->getHtml();
