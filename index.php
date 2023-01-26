@@ -56,17 +56,15 @@ class Persona
     private $dataNascita;
     private $luogoNascita;
     private $codFiscale;
-    private Stipendio $stipendio;
-    private $dataAssunzione;
 
-    public function __construct($nome, $cognome, $dataNascita, $codFiscale, Stipendio $stipendio, $dataAssunzione)
+    public function __construct($nome, $cognome, $dataNascita, $luogoNascita, $codFiscale)
     {
         $this->setNome($nome);
         $this->setCognome($cognome);
         $this->setDataNascita($dataNascita);
+        $this->setLuogoNascita($luogoNascita);
         $this->setCodFiscale($codFiscale);
-        $this->setStipendio($stipendio);
-        $this->setDataAssunzione($dataAssunzione);
+
 
     }
     public function setNome($nome)
@@ -75,7 +73,7 @@ class Persona
     }
     public function getNome()
     {
-        $this->nome;
+        return $this->nome;
     }
     public function setCognome($cognome)
     {
@@ -83,7 +81,7 @@ class Persona
     }
     public function getCognome()
     {
-        $this->cognome;
+        return $this->cognome;
     }
     public function setDataNascita($dataNascita)
     {
@@ -91,7 +89,15 @@ class Persona
     }
     public function getDataNascita()
     {
-        $this->dataNascita;
+        return $this->dataNascita;
+    }
+    public function setLuogoNascita($luogoNascita)
+    {
+        $this->luogoNascita = $luogoNascita;
+    }
+    public function getLuogoNascita()
+    {
+        return $this->luogoNascita;
     }
     public function setCodFiscale($codFiscale)
     {
@@ -99,7 +105,19 @@ class Persona
     }
     public function getCodFiscale()
     {
-        $this->codFiscale;
+        return $this->codFiscale;
+    }
+
+}
+class Impiegato extends Persona
+{
+    private Stipendio $stipendio;
+    private $dataAssunzione;
+    public function __construct($nome, $cognome, $dataNascita, $luogoNascita, $codFiscale, Stipendio $stipendio, $dataAssunzione)
+    {
+        parent::__construct($nome, $cognome, $dataNascita, $luogoNascita, $codFiscale);
+        $this->setStipendio($stipendio);
+        $this->setDataAssunzione($dataAssunzione);
     }
     public function setStipendio($stipendio)
     {
@@ -107,7 +125,7 @@ class Persona
     }
     public function getStipendio()
     {
-        $this->stipendio->stipendioAnnuale();
+        return $this->stipendio->stipendioAnnuale();
     }
     public function setDataAssunzione($dataAssunzione)
     {
@@ -115,11 +133,16 @@ class Persona
     }
     public function getDataAssunzione()
     {
-        $this->dataAssunzione;
+        return $this->dataAssunzione;
+    }
+    public function getHtml()
+    {
+        return "</h1>" . "Nome :" . $this->getNome() . "<br>" . "Cognome :" . $this->getCognome() . "<br>" . "Codice Fiscale :" . $this->getCodFiscale() . "<br>" . "Stipendio Annuale" . $this->getStipendio();
     }
 
 
 }
-
 $stipendio1 = new Stipendio(1200, 800, 700);
-echo $stipendio1->getHtml();
+$impiegato1 = new Impiegato("Luca", "Rossi", "1990-10-10", "Milano", "AD21DSM28F", $stipendio1, "2022-01-01");
+// echo $stipendio1->getHtml();
+echo $impiegato1->getHtml();
