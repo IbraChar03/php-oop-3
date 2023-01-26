@@ -107,6 +107,10 @@ class Persona
     {
         return $this->codFiscale;
     }
+    public function getHtml()
+    {
+        return "Nome : " . $this->getNome() . "<br>" . "Cognome : " . $this->getCognome() . "<br>" . "Codice Fiscale : " . $this->getCodFiscale() . "<br>";
+    }
 
 }
 class Impiegato extends Persona
@@ -135,14 +139,53 @@ class Impiegato extends Persona
     {
         return $this->dataAssunzione;
     }
-    public function getHtml()
+    public function getHtmlImpiegato()
     {
-        return "</h1>" . "Nome :" . $this->getNome() . "<br>" . "Cognome :" . $this->getCognome() . "<br>" . "Codice Fiscale :" . $this->getCodFiscale() . "<br>" . "Stipendio Annuale" . $this->getStipendio();
+        return "<h1>" . $this->getHtml() . "Stipendio Annuale : " . $this->getStipendio() . " €" . "</h1>";
+    }
+
+
+}
+class Capo extends Persona
+{
+    private $dividendo;
+    private $bonus;
+    public function __construct($nome, $cognome, $dataNascita, $luogoNascita, $codFiscale, $dividendo, $bonus)
+    {
+        parent::__construct($nome, $cognome, $dataNascita, $luogoNascita, $codFiscale);
+        $this->setDividendo($dividendo);
+        $this->setBonus($bonus);
+    }
+    public function setDividendo($dividendo)
+    {
+        $this->dividendo = $dividendo;
+    }
+    public function getDividendo()
+    {
+        return $this->dividendo;
+    }
+    public function setBonus($bonus)
+    {
+        $this->bonus = $bonus;
+    }
+    public function getBonus()
+    {
+        return $this->bonus;
+    }
+    public function redditoAnnuale()
+    {
+        return ($this->getDividendo() * 12) + $this->getBonus();
+    }
+    public function getHtmlCapo()
+    {
+        return "<h1>" . $this->getHtml() . "Dividendo : " . $this->getDividendo() . "<br>" . "Bonus : " . $this->getBonus() . "<br>" . "Reddito Annuale : " . $this->redditoAnnuale() . "</h1>";
     }
 
 
 }
 $stipendio1 = new Stipendio(1200, 800, 700);
 $impiegato1 = new Impiegato("Luca", "Rossi", "1990-10-10", "Milano", "AD21DSM28F", $stipendio1, "2022-01-01");
-// echo $stipendio1->getHtml();
-echo $impiegato1->getHtml();
+$capo1 = new Capo("Mario", "Verdi", "1967-20-12", "Firenze", "MDJ2KDOED2", 1700, 400);
+
+echo $impiegato1->getHtmlImpiegato();
+echo $capo1->getHtmlCapo();
